@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
+import fetchingPokemons from "../actions/fetchPokemons"
 
-export default class App extends Component {
+class App extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(fetchingPokemons())
+  }
+
   render() {
     return (
       <div className='app'>
@@ -10,3 +17,12 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return (
+    {pokemons: state.fetchPokeReducer.pokemons}
+  )
+}
+
+
+export default connect(mapStateToProps)(App)
