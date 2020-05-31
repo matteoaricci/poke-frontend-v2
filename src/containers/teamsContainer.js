@@ -49,11 +49,22 @@ class teamsContainer extends Component {
     }
 
     editTeam = (team) => {
-        console.log('Edit this Team: ' + team)
+        this.props.history.push({
+            pathname: '/teamworkshop',
+            state: {currentTeam: team}
+        })
     }
 
     deleteTeam = (team) => {
-        console.log('Delete this Team: ' + team)
+        fetch(`http://localhost:3001/userteams/${team}`,{
+            method: "DELETE",
+            headers: {
+                "Content-type": 'application/json',
+                "Accept": 'application/json'
+            }
+        })
+        .then(resp => resp.json())
+        .then(conf => this.setState({teams: this.state.teams.filter(team => team.id != conf.id)}))
     }
 
     render() {
