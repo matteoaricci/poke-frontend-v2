@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import { BrowserRouter } from "react-router-dom";
 import App from "./components/app";
-import reducers from "./reducers";
 import thunk from 'redux-thunk'
 import rootReducer from './reducers/index'
 
@@ -17,9 +16,7 @@ import "./style/main.scss";
 function main() {
   ReactDOM.render(
     <Provider store={store}>
-      <BrowserRouter>
         <App />
-      </BrowserRouter>
     </Provider>,
     document.querySelector(".app-wrapper")
   );

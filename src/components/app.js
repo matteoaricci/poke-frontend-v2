@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import fetchingPokemons from "../actions/fetchPokemons"
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
+
+import NavBar from "./navBar"
+import teamsContainer from '../containers/teamsContainer'
 
 class App extends Component {
 
@@ -10,10 +18,12 @@ class App extends Component {
 
   render() {
     return (
+      <Router>
       <div className='app'>
-        <h1>DevCamp React Starter</h1>
-        <h2>React Redux Router</h2>
+        <NavBar/>
+        <Route path='/teams' component={teamsContainer}/>
       </div>
+      </Router>
     );
   }
 }

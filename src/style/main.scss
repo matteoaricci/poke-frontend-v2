@@ -1,5 +1,9 @@
 html {
     font-size: 62.5%; // 1rem is 10px
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: pink;
+    height: 100%;
 }
 
 *,
@@ -12,6 +16,8 @@ html {
 }
 
 body {
+    height: 100%;
+    background-color: rgba(182, 226, 255, 0.452);
     overflow-x: hidden;
     font-weight: normal;
 
@@ -22,7 +28,9 @@ body {
 }
 
 .app {
+    height: 100%;
+    width: 100%;
     margin-top: 2rem;
-    display: grid;
+    // display: inline-block;
     justify-items: center;
 }
