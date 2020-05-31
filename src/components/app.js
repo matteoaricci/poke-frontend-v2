@@ -9,6 +9,7 @@ import {
 
 import NavBar from "./navBar"
 import teamsContainer from '../containers/teamsContainer'
+import teamWorkshop from '../containers/teamWorkshop'
 
 class App extends Component {
 
@@ -22,6 +23,7 @@ class App extends Component {
       <div className='app'>
         <NavBar/>
         <Route path='/teams' component={teamsContainer}/>
+        <Route path='/teamworkshop' component={teamWorkshop}/>
       </div>
       </Router>
     );
