@@ -44,16 +44,16 @@ class teamWorkshop extends Component {
     render() {
         return (
             <div>
-                <Container className='pokemon-on-team'>
+                <Container style={{paddingLeft: 0, paddingRight: 0}} className='pokemon-on-team'>
                     <Row>
                         {this.state.team.map((member, index) => <Col xs id={index} onClick={event => this.handleMemberClick(event)}>{member.id}</Col>)}
                         {this.state.team.length < 6 ? <Button onClick={this.addPokemonClick} >Add Pokemon</Button> : null}
                     </Row>
                 </Container>
 
-                <div className='pokemon-container'>
+                <Container fluid className='pokemon-container'>
                    {this.props.location.state.pokemon.map(pokemon => <PokemonList pokemon={pokemon}/>)}
-                </div>
+                </Container>
             </div>
         );
     }
