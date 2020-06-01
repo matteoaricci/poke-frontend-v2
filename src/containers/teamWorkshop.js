@@ -12,9 +12,9 @@ class teamWorkshop extends Component {
     componentDidMount() {
         const teamId = this.props.location.state.currentTeam
 
-        fetch(`http://localhost:3001/pokeonteam/${teamId}`)
+        fetch(`http://localhost:3001/loadpoketeams/${teamId}`)
         .then(resp => resp.json())
-        .then(team => this.setState({team}))
+        .then(team => this.setState({team: team}))
     }
 
     addPokemonClick = () => {
