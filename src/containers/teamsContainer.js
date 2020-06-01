@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Row} from 'react-bootstrap'
-import teamWorkshop from './teamWorkshop'
-import {Route, BrowserRouter as Router} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 class teamsContainer extends Component {
     constructor() {
@@ -33,7 +32,7 @@ class teamsContainer extends Component {
         .then(newTeam => 
             this.props.history.push({
                 pathname: '/teamworkshop',
-                state: {currentTeam: newTeam}
+                state: {currentTeam: newTeam, pokemon: this.props.pokemon}
             })
         )
 
@@ -51,7 +50,7 @@ class teamsContainer extends Component {
     editTeam = (team) => {
         this.props.history.push({
             pathname: '/teamworkshop',
-            state: {currentTeam: team}
+            state: {currentTeam: team, pokemon: this.props.pokemon}
         })
     }
 
@@ -79,4 +78,10 @@ class teamsContainer extends Component {
     }
 }
 
-export default teamsContainer;
+const mapStateToProps = state => {
+    return {
+        pokemon: state.fetchPokeReducer.pokemons
+    }
+}
+
+export default connect(mapStateToProps)(teamsContainer);

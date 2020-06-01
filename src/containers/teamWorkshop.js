@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap'
+import {Button, Container, Row, Col} from 'react-bootstrap'
+import PokemonList from '../components/pokemonList'
+import {connect} from 'react-redux'
+
 class teamWorkshop extends Component {
 
     constructor() {
         super();
         this.state = {
-            team: []
+            team: [],
+            selectedMember: ''
         }
     }
 
@@ -15,6 +19,11 @@ class teamWorkshop extends Component {
         fetch(`http://localhost:3001/loadpoketeams/${teamId}`)
         .then(resp => resp.json())
         .then(team => this.setState({team: team}))
+    }
+
+    handleMemberClick = (event) => {
+        let ind = event.currentTarget.id
+        this.setState({selectedMember: this.state.team[ind]})
     }
 
     addPokemonClick = () => {
@@ -35,13 +44,24 @@ class teamWorkshop extends Component {
     render() {
         return (
             <div>
-                <div className='pokemon-on-team'>
-                    {this.state.team.map(member => <div>{member.user_team_id}</div>)}
-                    <Button onClick={this.addPokemonClick} >Add Pokemon</Button>
-                </div>
+                <Container className='pokemon-on-team'>
+                    <Row>
+                        {this.state.team.map((member, index) => <Col xs id={index} onClick={event => this.handleMemberClick(event)}>{member.id}</Col>)}
+                        {this.state.team.length < 6 ? <Button onClick={this.addPokemonClick} >Add Pokemon</Button> : null}
+                    </Row>
+                </Container>
 
+                <div className='pokemon-container'>
+                   {this.props.location.state.pokemon.map(pokemon => <PokemonList pokemon={pokemon}/>)}
+                </div>
             </div>
         );
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        pokemon: state.fetchPokeReducer.pokemons
     }
 }
 
