@@ -21,7 +21,7 @@ class PokemonList extends Component {
     render() {
         const poke = this.props.pokemon
         return (
-            <Row style={{marginLeft: '2%', marginRight: '2%'}} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseExit} style={{backgroundColor: this.state.hover ? 'pink' : null}}>
+            <Row noGutters onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseExit} style={{backgroundColor: this.state.hover ? 'grey' : null}}>
                 <Col xs={2}>{poke.name}</Col>
                 <Col>{poke.type2 != 'null' ? `${poke.type2} / ${poke.type1}` : `${poke.type1}`}</Col>
                 <Col>{poke.hp_stat} {poke.attack_stat} {poke.defense_stat} {poke.sp_attack_stat} {poke.sp_defense_stat} {poke.speed_stat}</Col>

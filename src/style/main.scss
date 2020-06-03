@@ -4,16 +4,18 @@ html {
     margin-right: 25%;
     background-color: pink;
     height: 100%;
+    overflow: hidden;
+    // position: absolute;
 }
 
-*,
-*::after,
-*::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-    font-family: 'montserrat';
-}
+// *,
+// *::after,
+// *::before {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: inherit;
+//     font-family: 'montserrat';
+// }
 
 body {
     height: 100%;
@@ -31,6 +33,6 @@ body {
     height: 100%;
     width: 100%;
     margin-top: 2rem;
-    // display: inline-block;
+    display: inline-block;
     justify-items: center;
 }
