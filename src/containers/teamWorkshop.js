@@ -89,10 +89,10 @@ class teamWorkshop extends Component {
                         <Col xs>
                             <Card id={index} onClick={event => this.handleMemberClick(event)}>
                                 <Card.Title>
-                                    {member.pokemon_id}
+                                    {this.props.location.state.pokemon.filter(poke => poke.id === member.pokemon_id)[0].name}
                                 </Card.Title>
                                 <Card.Body>
-                                    {member.id}
+                                    {member.pokemon_id}
                                 </Card.Body>
                             </Card>
                                 <Button style={{width: '90%'}} id={index} onClick={event => this.removePokemonClick(event)}>Remove</Button>
@@ -103,14 +103,16 @@ class teamWorkshop extends Component {
                 </Container>
 
                 <Container className='select-poke-info'>
-                    {this.state.selectedMember ? <SelectedPokeInfo selectedPoke={this.state.selectedMember}/> : null }
+                    {this.state.selectedMember ? <SelectedPokeInfo pokemon={this.props.location.state.pokemon.filter(poke => poke.id === this.state.selectedMember.pokemon.pokemon_id)} selectedPoke={this.state.selectedMember}/> : null }
                     
                 </Container>
-
+                        
+                {this.state.selectedMember ? 
                 <Container onClick={event => this.pokemonListClick(event)} style={{padding: 0, overflow: 'auto', height: '50em'}}>
                    {this.props.location.state.pokemon.map(pokemon => <PokemonList pokemon={pokemon}/>)}
                 </Container>
-
+                : 
+                <h3>Select a Party Member</h3>}
             </div>
         );
     }
