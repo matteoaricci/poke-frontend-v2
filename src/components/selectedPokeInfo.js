@@ -4,7 +4,8 @@ class selectedPokeInfo extends Component {
     render() {
         return (
             <div>
-                {console.log(this.props)}
+                This is the Selected Pokemon!
+                {/* {console.log(this.props.selectedPoke.pokemon.id)} */}
             </div>
         );
     }

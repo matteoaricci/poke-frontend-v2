@@ -10,7 +10,7 @@ class teamWorkshop extends Component {
         super();
         this.state = {
             team: [],
-            selectedMember: ''
+            selectedMember: false
         }
     }
 
@@ -59,6 +59,26 @@ class teamWorkshop extends Component {
         .then(gone => this.setState({team: this.state.team.filter(member => member.id !== gone.id)}))
     }
 
+    pokemonListClick = event => {
+        const newPokeId = event.target.parentElement.id
+        const currentMember = this.state.selectedMember.pokemon.id
+        const ind = this.state.selectedMember.ind
+        fetch(`http://localhost:3001/poke_on_teams/${currentMember}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({pokemon_id: newPokeId})
+        })
+        .then(resp => resp.json())
+        .then(updatedPoke => {
+            const updatedTeam = this.state.team
+            updatedTeam[ind] = updatedPoke
+            this.setState({selectedMember: {pokemon: updatedPoke, ind: ind}, team: updatedTeam})
+    })
+
+    }
+
     render() {
         return (
             <div>
@@ -83,10 +103,11 @@ class teamWorkshop extends Component {
                 </Container>
 
                 <Container className='select-poke-info'>
-                    <SelectedPokeInfo selectedPoke={this.state.selectedMember}/>
+                    {this.state.selectedMember ? <SelectedPokeInfo selectedPoke={this.state.selectedMember}/> : null }
+                    
                 </Container>
 
-                <Container style={{padding: 0, overflow: 'auto', height: '50em'}}>
+                <Container onClick={event => this.pokemonListClick(event)} style={{padding: 0, overflow: 'auto', height: '50em'}}>
                    {this.props.location.state.pokemon.map(pokemon => <PokemonList pokemon={pokemon}/>)}
                 </Container>
 
