@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useDebounce } from 'react';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap'
 import PokemonList from '../components/pokemonList'
 import SelectedPokeInfo from '../components/selectedPokeInfo'
@@ -60,7 +60,12 @@ class teamWorkshop extends Component {
     }
 
     pokemonListClick = event => {
-        const newPokeId = event.target.parentElement.id
+        const type = event.target.parentElement.className.split(' ')[0]
+        const payload = event.target.parentElement.id
+        this.patchPokemon(type, payload)
+    }
+
+    patchPokemon = (type, payload) => {
         const currentMember = this.state.selectedMember.pokemon.id
         const ind = this.state.selectedMember.ind
         fetch(`http://localhost:3001/poke_on_teams/${currentMember}`, {
@@ -68,7 +73,7 @@ class teamWorkshop extends Component {
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({pokemon_id: newPokeId})
+            body: JSON.stringify({[type]: payload})
         })
         .then(resp => resp.json())
         .then(updatedPoke => {
@@ -76,7 +81,18 @@ class teamWorkshop extends Component {
             updatedTeam[ind] = updatedPoke
             this.setState({selectedMember: {pokemon: updatedPoke, ind: ind}, team: updatedTeam})
     })
+    }
 
+    changeNickname = event => {
+        const type = 'nickname'
+        const payload = event.target.value
+        this.patchPokemon(type, payload)
+    }
+
+    changeEffortValues = event => {
+       const type = event.currentTarget.className.split(' ')[0]
+       const payload = event.currentTarget.value
+       this.patchPokemon(type, payload)
     }
 
     render() {
@@ -92,7 +108,7 @@ class teamWorkshop extends Component {
                                     {this.props.location.state.pokemon.filter(poke => poke.id === member.pokemon_id)[0].name}
                                 </Card.Title>
                                 <Card.Body>
-                                    {member.pokemon_id}
+                                    {member.nickname !== 'null' ? member.nickname : null}
                                 </Card.Body>
                             </Card>
                                 <Button style={{width: '90%'}} id={index} onClick={event => this.removePokemonClick(event)}>Remove</Button>
@@ -103,7 +119,12 @@ class teamWorkshop extends Component {
                 </Container>
 
                 <Container className='select-poke-info'>
-                    {this.state.selectedMember ? <SelectedPokeInfo pokemon={this.props.location.state.pokemon.filter(poke => poke.id === this.state.selectedMember.pokemon.pokemon_id)} selectedPoke={this.state.selectedMember}/> : null }
+                    {this.state.selectedMember ? 
+                    <SelectedPokeInfo 
+                    changeEffortValues={event => this.changeEffortValues(event)} 
+                    changeNickname={event => this.changeNickname(event)} 
+                    pokemon={this.props.location.state.pokemon.filter(poke => poke.id === this.state.selectedMember.pokemon.pokemon_id)} 
+                    selectedPoke={this.state.selectedMember}/> : null }
                     
                 </Container>
                         
