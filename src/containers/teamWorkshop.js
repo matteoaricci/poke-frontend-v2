@@ -1,4 +1,5 @@
-import React, { Component, useDebounce } from 'react';
+import React, { Component } from 'react';
+import debounce from "lodash.debounce";
 import {Button, Container, Row, Col, Card} from 'react-bootstrap'
 import PokemonList from '../components/pokemonList'
 import SelectedPokeInfo from '../components/selectedPokeInfo'
@@ -10,7 +11,8 @@ class teamWorkshop extends Component {
         super();
         this.state = {
             team: [],
-            selectedMember: false
+            selectedMember: false,
+            movesets: []
         }
     }
 
@@ -92,8 +94,27 @@ class teamWorkshop extends Component {
     changeEffortValues = event => {
        const type = event.currentTarget.className.split(' ')[0]
        const payload = event.currentTarget.value
-       this.patchPokemon(type, payload)
+       const ind = this.state.selectedMember.ind 
+       const currentPoke = this.state.selectedMember.pokemon
+       currentPoke[type] = payload
+       this.setState({selectedMember: {pokemon: currentPoke, ind: ind}})
+
+       this.debounceFunction(type, payload)
     }
+
+    debounceFunction = debounce((type, payload) => {
+        this.patchPokemon(type, payload)
+    }, 500)
+
+    teamHasPoke = () => {
+        if (this.state.team.length > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    
 
     render() {
         return (
@@ -101,11 +122,12 @@ class teamWorkshop extends Component {
 
                 <Container style={{padding: 0}} className='pokemon-on-team'>
                     <Row noGutters>
+                        
                         {this.state.team.map((member, index) => 
                         <Col xs>
                             <Card id={index} onClick={event => this.handleMemberClick(event)}>
                                 <Card.Title>
-                                    {this.props.location.state.pokemon.filter(poke => poke.id === member.pokemon_id)[0].name}
+                                    {member.pokemon_id != null ? this.props.location.state.pokemon.filter(poke => poke.id === member.pokemon_id)[0].name : null}
                                 </Card.Title>
                                 <Card.Body>
                                     {member.nickname !== 'null' ? member.nickname : null}
@@ -119,7 +141,7 @@ class teamWorkshop extends Component {
                 </Container>
 
                 <Container className='select-poke-info'>
-                    {this.state.selectedMember ? 
+                    {this.state.selectedMember && this.state.selectedMember.pokemon.pokemon_id != null ? 
                     <SelectedPokeInfo 
                     changeEffortValues={event => this.changeEffortValues(event)} 
                     changeNickname={event => this.changeNickname(event)} 

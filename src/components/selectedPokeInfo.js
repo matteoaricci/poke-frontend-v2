@@ -20,12 +20,12 @@ class selectedPokeInfo extends Component {
                     </Form>
 
                     <Form >
-                        <RangeSlider className='hp_ev' value={0} step='4' max='252'/>
-                        {/* <RangeSlider className='attack_ev' value={this.state.attack_ev} step='4' max='252'/>
-                        <RangeSlider className="defense_ev" value={this.state.defense_ev} step='4' max='252'/>
-                        <RangeSlider className='spattack_ev' value={this.state.spattack_ev} step='4' max='252'/>
-                        <RangeSlider className='spdefense_ev' value={this.state.spdefense_ev} step='4' max='252'/>
-                        <RangeSlider className='speed_ev' value={this.state.speed_ev} step='4' max='252'/> */}
+                        <h5>{this.props.selectedPoke.pokemon.hp_ev}</h5><RangeSlider size='sm' style={{transition: 'none'}} onChange={event => this.props.changeEffortValues(event)} className='hp_ev' value={this.props.selectedPoke.pokemon.hp_ev} step='1' max='252'/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='attack_ev' value={this.props.selectedPoke.pokemon.attack_ev} step='4' max='252'/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='defense_ev' value={this.props.selectedPoke.pokemon.defense_ev} step='4' max='252'/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='spattack_ev' value={this.props.selectedPoke.pokemon.spattack_ev} step='4' max='252'/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='spdefense_ev' value={this.props.selectedPoke.pokemon.spdefense_ev} step='4' max='252'/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='speed_ev' value={this.props.selectedPoke.pokemon.speed_ev} step='4' max='252'/>
                     </Form>
 
                 </div>

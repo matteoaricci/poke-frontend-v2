@@ -3,6 +3,9 @@ import {connect} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import fetchingPokemons from "../actions/fetchPokemons"
+import fetchingMoveSets from '../actions/fetchMoveSets'
+import fetchingMoves from '../actions/fetchMoves'
+
 import {
   BrowserRouter as Router,
   Route
@@ -16,6 +19,8 @@ class App extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchingPokemons())
+    this.props.dispatch(fetchingMoveSets())
+    this.props.dispatch(fetchingMoves())
   }
 
   render() {
@@ -33,7 +38,11 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return (
-    {pokemons: state.fetchPokeReducer.pokemons}
+    {
+      pokemons: state.fetchPokeReducer.pokemons,
+      moves: state.fetchMoveReducer.moves,
+      moveSets: state.fetchMoveSetReducer.moveSets
+    }
   )
 }
 
