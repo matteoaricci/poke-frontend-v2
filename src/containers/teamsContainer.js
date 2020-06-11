@@ -32,7 +32,7 @@ class teamsContainer extends Component {
         .then(newTeam => 
             this.props.history.push({
                 pathname: '/teamworkshop',
-                state: {currentTeam: newTeam, pokemon: this.props.pokemon}
+                state: {currentTeam: newTeam, pokemon: this.props.pokemon, moves: this.props.moves, moveSets: this.props.moveSets}
             })
         )
 
@@ -50,7 +50,7 @@ class teamsContainer extends Component {
     editTeam = (team) => {
         this.props.history.push({
             pathname: '/teamworkshop',
-            state: {currentTeam: team, pokemon: this.props.pokemon}
+            state: {currentTeam: team, pokemon: this.props.pokemon, moves: this.props.moves, moveSets: this.props.moveSets}
         })
     }
 
@@ -80,7 +80,9 @@ class teamsContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        pokemon: state.fetchPokeReducer.pokemons
+        pokemon: state.fetchPokeReducer.pokemons,
+        moves: state.fetchMoveReducer.moves,
+        moveSets: state. fetchMoveSetReducer.moveSets
     }
 }
 

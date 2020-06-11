@@ -8,6 +8,16 @@ class selectedPokeInfo extends Component {
         console.log(event.currentTarget)
     }
 
+    componentDidMount() {
+        console.log('she mounted again')
+    }
+
+    componentWillUnmount() {
+        console.log('she unmounted')
+    }
+
+
+
     render() {
         return (
             <div>
@@ -20,12 +30,12 @@ class selectedPokeInfo extends Component {
                     </Form>
 
                     <Form >
-                        <h5>{this.props.selectedPoke.pokemon.hp_ev}</h5><RangeSlider size='sm' style={{transition: 'none'}} onChange={event => this.props.changeEffortValues(event)} className='hp_ev' value={this.props.selectedPoke.pokemon.hp_ev} step='1' max='252'/>
-                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='attack_ev' value={this.props.selectedPoke.pokemon.attack_ev} step='4' max='252'/>
-                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='defense_ev' value={this.props.selectedPoke.pokemon.defense_ev} step='4' max='252'/>
-                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='spattack_ev' value={this.props.selectedPoke.pokemon.spattack_ev} step='4' max='252'/>
-                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='spdefense_ev' value={this.props.selectedPoke.pokemon.spdefense_ev} step='4' max='252'/>
-                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='speed_ev' value={this.props.selectedPoke.pokemon.speed_ev} step='4' max='252'/>
+                        <h5>{this.props.selectedPoke.pokemon.hp_ev}</h5><RangeSlider size='sm' style={{transition: 'none'}} onChange={event => this.props.changeEffortValues(event)} className='hp_ev' value={parseInt(this.props.selectedPoke.pokemon.hp_ev)} step={1} max={252}/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='attack_ev' value={this.props.selectedPoke.pokemon.attack_ev || 0} step={4} max={252}/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='defense_ev' value={this.props.selectedPoke.pokemon.defense_ev || 0} step={4} max={252}/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='spattack_ev' value={this.props.selectedPoke.pokemon.spattack_ev || 0} step={4} max={252}/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='spdefense_ev' value={this.props.selectedPoke.pokemon.spdefense_ev || 0} step={4} max={252}/>
+                        <RangeSlider size='sm' onChange={event => this.props.changeEffortValues(event)} className='speed_ev' value={this.props.selectedPoke.pokemon.speed_ev || 0} step={4} max={252}/>
                     </Form>
 
                 </div>

@@ -21,7 +21,7 @@ class teamWorkshop extends Component {
 
         fetch(`http://localhost:3001/loadpoketeams/${teamId}`)
         .then(resp => resp.json())
-        .then(team => this.setState({team: team}))
+        .then(team => this.setState({team: team.current_team, movesets: team.move_sets, pokemonMoves: team.pokemon_moves}))
     }
 
     handleMemberClick = (event) => {
@@ -80,7 +80,9 @@ class teamWorkshop extends Component {
         .then(resp => resp.json())
         .then(updatedPoke => {
             const updatedTeam = this.state.team
-            updatedTeam[ind] = updatedPoke
+            const updatedMovesets = this.state.pokemonMoves
+            updatedMovesets[ind] = updatedPoke.move_set
+            updatedTeam[ind] = updatedPoke.current_poke
             this.setState({selectedMember: {pokemon: updatedPoke, ind: ind}, team: updatedTeam})
     })
     }
@@ -92,6 +94,7 @@ class teamWorkshop extends Component {
     }
 
     changeEffortValues = event => {
+        event.preventDefault();
        const type = event.currentTarget.className.split(' ')[0]
        const payload = event.currentTarget.value
        const ind = this.state.selectedMember.ind 
@@ -124,7 +127,7 @@ class teamWorkshop extends Component {
                     <Row noGutters>
                         
                         {this.state.team.map((member, index) => 
-                        <Col xs>
+                        <Col xs key={index}>
                             <Card id={index} onClick={event => this.handleMemberClick(event)}>
                                 <Card.Title>
                                     {member.pokemon_id != null ? this.props.location.state.pokemon.filter(poke => poke.id === member.pokemon_id)[0].name : null}
@@ -152,7 +155,7 @@ class teamWorkshop extends Component {
                         
                 {this.state.selectedMember ? 
                 <Container onClick={event => this.pokemonListClick(event)} style={{padding: 0, overflow: 'auto', height: '50em'}}>
-                   {this.props.location.state.pokemon.map(pokemon => <PokemonList pokemon={pokemon}/>)}
+                   {this.props.location.state.pokemon.map(pokemon => <PokemonList key={pokemon.id} pokemon={pokemon}/>)}
                 </Container>
                 : 
                 <h3>Select a Party Member</h3>}
