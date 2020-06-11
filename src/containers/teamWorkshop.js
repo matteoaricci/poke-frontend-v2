@@ -18,7 +18,7 @@ class teamWorkshop extends Component {
 
     componentDidMount() {
         const teamId = this.props.location.state.currentTeam
-
+        console.log('workshop mount')
         fetch(`http://localhost:3001/loadpoketeams/${teamId}`)
         .then(resp => resp.json())
         .then(team => this.setState({team: team.current_team, movesets: team.move_sets, pokemonMoves: team.pokemon_moves}))
@@ -68,7 +68,9 @@ class teamWorkshop extends Component {
     }
 
     patchPokemon = (type, payload) => {
-        const currentMember = this.state.selectedMember.pokemon.id
+        console.log('patchingPokemon')
+        let currentMember = this.state.selectedMember.pokemon.id
+        console.log(currentMember)
         const ind = this.state.selectedMember.ind
         fetch(`http://localhost:3001/poke_on_teams/${currentMember}`, {
             method: 'PATCH',
@@ -83,11 +85,12 @@ class teamWorkshop extends Component {
             const updatedMovesets = this.state.pokemonMoves
             updatedMovesets[ind] = updatedPoke.move_set
             updatedTeam[ind] = updatedPoke.current_poke
-            this.setState({selectedMember: {pokemon: updatedPoke, ind: ind}, team: updatedTeam})
-    })
+            this.setState({selectedMember: {pokemon: updatedPoke.current_poke, ind: ind}, team: updatedTeam})
+        })
     }
 
     changeNickname = event => {
+        console.log('she made to changeNickname!!')
         const type = 'nickname'
         const payload = event.target.value
         this.patchPokemon(type, payload)
@@ -144,12 +147,12 @@ class teamWorkshop extends Component {
                 </Container>
 
                 <Container className='select-poke-info'>
-                    {this.state.selectedMember && this.state.selectedMember.pokemon.pokemon_id != null ? 
+                    {this.state.selectedMember ? 
                     <SelectedPokeInfo 
                     changeEffortValues={event => this.changeEffortValues(event)} 
                     changeNickname={event => this.changeNickname(event)} 
                     pokemon={this.props.location.state.pokemon.filter(poke => poke.id === this.state.selectedMember.pokemon.pokemon_id)} 
-                    selectedPoke={this.state.selectedMember}/> : null }
+                    selectedPoke={this.state.selectedMember}/> : 'Hello' }
                     
                 </Container>
                         
